@@ -1,0 +1,25 @@
+<configuration>
+    <!-- First, load the system properties if present -->
+    <property scope="system" name="log.level" default="INFO"/>
+
+    <!--property resource="config.properties"/-->
+
+    <!-- Console Appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root logger level (default: INFO, but override with system property) -->
+    <root level="${log.level:-INFO}">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <!-- Logger for Camel components -->
+    <logger name="org.apache.camel" level="${log.level:-INFO}" />
+
+    <!-- Logger for ActiveMQ Artemis -->
+    <logger name="org.apache.activemq" level="${log.level:-INFO}" />
+    <logger name="org.apache.activemq.artemis" level="${log.level:-INFO}" />
+</configuration>
