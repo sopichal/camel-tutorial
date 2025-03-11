@@ -17,4 +17,13 @@ public class AppTest
     {
         assertTrue( true );
     }
+
+        /**
+     * Test to run the main method of App
+     */
+    // @Test
+    // public void testApp() throws Exception {
+    //     // Call the main method of your application
+    //     App.main(new String[]{});
+    // }
 }

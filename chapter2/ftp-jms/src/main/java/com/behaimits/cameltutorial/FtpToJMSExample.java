@@ -51,7 +51,24 @@ public class FtpToJMSExample {
           .to("jms:incomingOrders");
         // from("ftp://localhost:2121/orders?username=rider&password=secret")
         //  .to("file:data/outbox");
-      } 
+
+        from("jms:incomingOrders")
+          .choice()
+            .when(header("CamelFileName").endsWith(".xml"))
+              .to("jms:xmlOrders")
+            .when(header("CamelFileName").regex("^.*(csv|csl)$"))
+              .to("jms:csvOrders")
+            .otherwise()
+              .to("jms:badOrders");
+
+        from("jms:xmlOrders")
+          .log("Received XML order: ${header.CamelFileName}")
+          .to("mock:xml");
+
+        from("jms:csvOrders")
+          .log("Received CSV order: ${header.CamelFileName}")
+          .to("mock:csv");
+      }
     });
     // main.start();
     // Thread.sleep(60000);
