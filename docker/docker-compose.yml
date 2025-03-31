@@ -1,0 +1,14 @@
+version: '3.3'
+
+services:
+  activemq-artemis:
+    image: apache/activemq-artemis:2.31.2-alpine
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    volumes:
+      - ./volumes/artemis-instance:/var/lib/artemis-instance
+    env_file:
+      - artemis.env
+    container_name: activemq-artemis
+    restart: unless-stopped

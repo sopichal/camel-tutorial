@@ -6,14 +6,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.stanscameltutorial</groupId>
+    <groupId>com.tutorial.camel</groupId>
     <artifactId>chapter2</artifactId>
     <version>2.0.0</version>
     <relativePath>..</relativePath>
   </parent>
 
   <artifactId>chapter2-ftp-jms</artifactId>
-  <name>Stan's Camel Tutorial :: Chapter 2 :: FTP to JMS</name>
+  <name>INSY Camel Tutorial :: Chapter 2 :: FTP to JMS</name>
 
   <!--groupId>com.behaimits.cameltutorial</groupId>
   <artifactId>ftp-jms</artifactId-->

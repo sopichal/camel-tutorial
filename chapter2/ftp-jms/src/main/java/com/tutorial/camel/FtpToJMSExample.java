@@ -1,4 +1,4 @@
-package com.behaimits.cameltutorial;
+package com.tutorial.camel;
 
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
@@ -12,6 +12,7 @@ import org.apache.camel.component.properties.PropertiesComponent;
 public class FtpToJMSExample {
   public static void main(String args[]) throws Exception {
 
+    System.out.println("Current working directory: " + System.getProperty("user.dir"));
     Main main = new Main();
 
     // // ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616?user=artemis&password=artemis");
@@ -61,13 +62,13 @@ public class FtpToJMSExample {
             .otherwise()
               .to("jms:badOrders");
 
-        from("jms:xmlOrders")
-          .log("Received XML order: ${header.CamelFileName}")
-          .to("mock:xml");
+        // from("jms:xmlOrders")
+        //   .log("Received XML order: ${header.CamelFileName}")
+        //   .to("mock:xml");
 
-        from("jms:csvOrders")
-          .log("Received CSV order: ${header.CamelFileName}")
-          .to("mock:csv");
+        // from("jms:csvOrders")
+        //   .log("Received CSV order: ${header.CamelFileName}")
+        //   .to("mock:csv");
       }
     });
     // main.start();
