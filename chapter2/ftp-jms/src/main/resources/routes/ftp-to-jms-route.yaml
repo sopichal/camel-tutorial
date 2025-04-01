@@ -1,0 +1,29 @@
+- route:
+    id: ftp-to-jms
+    from:
+      uri: "ftp://{{ftp.server}}:{{ftp.port}}/orders"
+      parameters:
+        username: "{{ftp.user}}"
+        password: "{{ftp.password}}"
+        delay: "5000"
+        move: "done"
+        autoCreate: "true"
+    steps:
+      - to: "jms:incomingOrders"
+
+- route:
+    id: jms-router
+    from:
+      uri: "jms:incomingOrders"
+    steps:
+      - choice:
+          when:
+            - simple: "${header.CamelFileName} endsWith '.xml'"
+              steps:
+                - to: "jms:xmlOrders"
+            - simple: "${header.CamelFileName} regex '^.*(csv|csl)$'"
+              steps:
+                - to: "jms:csvOrders"
+          otherwise:
+            steps:
+              - to: "jms:badOrders"
