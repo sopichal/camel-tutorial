@@ -1,0 +1,72 @@
+# YAML route with steps format for Camel 4.4.0
+- beans:
+    - name: propertiesComponent
+      type: org.apache.camel.component.properties.PropertiesComponent
+      properties:
+        location: classpath:config.properties
+
+    - name: jmsConnectionFactory
+      type: org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory
+      properties:
+        brokerURL: "{{broker.url}}"
+        user: "{{broker.user}}"
+        password: "{{broker.password}}"
+
+    - name: jms
+      type: org.apache.camel.component.jms.JmsComponent
+      properties:
+        connectionFactory: "#jmsConnectionFactory"
+        preserveMessageQos: true
+
+- route:
+    id: "ftptojmsroute"
+    from:
+      uri: "ftp://{{ftp.server}}:{{ftp.port}}/orders"
+      parameters:
+        username: "{{ftp.user}}"
+        password: "{{ftp.password}}"
+        delay: 5000
+        move: done
+        autoCreate: true
+      steps:
+        - to:
+            uri: "jms:incomingOrders"
+
+- route:
+    id: "jmsrouting"
+    from:
+      uri: "jms:incomingOrders"
+      steps:
+        - choice:
+            when:
+              - simple: "${header.CamelFileName} endsWith '.xml'"
+                steps:
+                  - to:
+                      uri: "jms:xmlOrders"
+              - simple: "${header.CamelFileName} regex '^.*(csv|csl)$'"
+                steps:
+                  - to:
+                      uri: "jms:csvOrders"
+            otherwise:
+              steps:
+                - to:
+                    uri: "jms:badOrders"
+
+# Uncomment these routes if needed
+# - route:
+#     id: xml-orders-route
+#     from:
+#       uri: "jms:xmlOrders"
+#     steps:
+#       - log:
+#           message: "Received XML order: ${header.CamelFileName}"
+#       - to: "mock:xml"
+    
+# - route:
+#     id: csv-orders-route
+#     from:
+#       uri: "jms:csvOrders"
+#     steps:
+#       - log:
+#           message: "Received CSV order: ${header.CamelFileName}"
+#       - to: "mock:csv"
