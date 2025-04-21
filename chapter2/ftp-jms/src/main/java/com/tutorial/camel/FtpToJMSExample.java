@@ -66,9 +66,27 @@ public class FtpToJMSExample {
         //   .log("Received XML order: ${header.CamelFileName}")
         //   .to("mock:xml");
 
-        // from("jms:csvOrders")
-        //   .log("Received CSV order: ${header.CamelFileName}")
-        //   .to("mock:csv");
+        from("jms:csvOrders")
+          .log("Received CSV order: ${header.CamelFileName}")
+          .unmarshal().csv()
+          .split(body())
+          .process(exchange -> {
+            // Get the CSV line as array of strings
+            String[] columns = exchange.getIn().getBody(String[].class);
+            if (columns != null && columns.length >= 3) {
+              String name = columns[0];
+              String customer = columns[1];
+              String amount = columns[2];
+  
+              
+              // Create XML order format
+              String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                          "<order name=\"" + name + "\" amount=\"" + amount + "\" customer=\"" + customer + "\"/>";
+              
+              exchange.getIn().setBody(xml);
+            }
+          })
+          .to("jms:xmlOrders");
       }
     });
     // main.start();

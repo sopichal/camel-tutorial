@@ -1,6 +1,6 @@
 <configuration>
     <!-- First, load the system properties if present -->
-    <property scope="system" name="log.level" default="INFO"/>
+    <property scope="system" name="log.level" default="DEBUG"/>
 
     <!--property resource="config.properties"/-->
 
