@@ -12,3 +12,42 @@ services:
       - artemis.env
     container_name: activemq-artemis
     restart: unless-stopped
+    networks:
+      - camel-network
+      
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./volumes/postgres-data:/var/lib/postgresql/data
+      # Mount init scripts to create database
+      - ../chapter2/jms-postgresql/createdb.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    networks:
+      - camel-network
+  
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@camel.tutorial
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - ./volumes/pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - camel-network
+
+networks:
+  camel-network:
+    driver: bridge
