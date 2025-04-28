@@ -1,0 +1,37 @@
+# YAML route with steps format for Camel 4.4.0
+- beans:
+    - name: propertiesComponent
+      type: org.apache.camel.component.properties.PropertiesComponent
+      properties:
+        location: classpath:config.properties
+
+    - name: jmsConnectionFactory
+      type: org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory
+      properties:
+        brokerURL: "{{broker.url}}"
+        user: "{{broker.user}}"
+        password: "{{broker.password}}"
+
+    - name: jms
+      type: org.apache.camel.component.jms.JmsComponent
+      properties:
+        connectionFactory: "#jmsConnectionFactory"
+        preserveMessageQos: true
+
+# Route to receive messages from a queue
+- route:
+    id: "queueReceiverRoute"
+    from:
+      uri: "jms:queue:{{jms.queue.name}}"
+      steps:
+        - log:
+            message: "Received message from queue at ${date:now:yyyy-MM-dd HH:mm:ss}: ${body}"
+
+# Route to receive messages from a topic
+- route:
+    id: "topicSubscriberRoute"
+    from:
+      uri: "jms:topic:{{jms.topic.name}}"
+      steps:
+        - log:
+            message: "Received message from topic at ${date:now:yyyy-MM-dd HH:mm:ss}: ${body}"

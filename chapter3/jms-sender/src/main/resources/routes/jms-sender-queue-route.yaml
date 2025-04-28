@@ -1,0 +1,41 @@
+# YAML route with steps format for Camel 4.4.0
+- beans:
+    - name: propertiesComponent
+      type: org.apache.camel.component.properties.PropertiesComponent
+      properties:
+        location: classpath:config.properties
+
+    - name: jmsConnectionFactory
+      type: org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory
+      properties:
+        brokerURL: "{{broker.url}}"
+        user: "{{broker.user}}"
+        password: "{{broker.password}}"
+
+    - name: jms
+      type: org.apache.camel.component.jms.JmsComponent
+      properties:
+        connectionFactory: "#jmsConnectionFactory"
+        preserveMessageQos: true
+        
+    - name: queueCounter
+      type: java.util.concurrent.atomic.AtomicInteger
+
+# Timer-based route to generate and send messages to a queue
+- route:
+    id: "queueSenderRoute"
+    from:
+      uri: "timer:queue-sender"
+      parameters:
+        period: 5000
+      steps:
+        - script:
+            language: groovy
+            script: "exchange.setProperty('counter', exchange.getContext().getRegistry().lookupByNameAndType('queueCounter', java.util.concurrent.atomic.AtomicInteger.class).incrementAndGet())"
+            resultType: java.lang.Integer
+        - setBody:
+            simple: "[Queue] Message #${exchangeProperty.counter}: Hello from JMS Queue Sender! Generated at ${date:now:yyyy-MM-dd HH:mm:ss}"
+        - log:
+            message: "Sending to queue: ${body}"
+        - to:
+            uri: "jms:queue:{{jms.queue.name}}"
