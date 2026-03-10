@@ -1,0 +1,10 @@
+- route:
+    id: fileCopyRoute
+    from:
+      uri: "file:data/inbox"
+      parameters:
+        noop: "true"
+        delay: "1000"
+      steps:
+        - to:
+            uri: "file:data/outbox"

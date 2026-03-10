@@ -29,6 +29,16 @@
       <artifactId>camel-core</artifactId>
       <version>4.4.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-main</artifactId>
+      <version>4.4.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-yaml-dsl</artifactId>
+      <version>4.4.0</version>
+    </dependency>
     <!-- SLF4J API -->
     <dependency>
       <groupId>org.slf4j</groupId>

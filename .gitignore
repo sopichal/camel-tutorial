@@ -36,3 +36,5 @@ Thumbs.db
 # testing data files
 **/data/inbox/
 **/data/outbox/
+
+classpath.txt
