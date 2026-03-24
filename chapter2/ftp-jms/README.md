@@ -53,9 +53,11 @@ You can access the web console at: http://localhost:8161/console with:
 Start the test FTP server:
 
 ```bash
-cd ../chapter2/ftp-jms/scripts
-python3 -m pip install pyftpdlib
-python3 ftpserver.py
+cd chapter2/ftp-jms/scripts
+uv venv .venv
+source .venv/bin/activate
+uv pip install pyftpdlib
+python ftpserver.py
 ```
 
 This will start an FTP server on localhost:2121 with:
