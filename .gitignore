@@ -40,3 +40,5 @@ Thumbs.db
 classpath.txt
 
 docker/volumes/
+
+**/tmp
