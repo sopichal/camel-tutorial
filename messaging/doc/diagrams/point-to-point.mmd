@@ -1,0 +1,14 @@
+flowchart LR
+    S["🕐 JMS Sender\n(timer: every 5 s)\njms-sender"]
+    Q[("CAMEL.ORDER.QUEUE")]
+    R1["📥 JMS Receiver #1\njms-receiver"]
+    R2["📥 JMS Receiver #2\njms-receiver"]
+
+    S -->|"order-1.xml\norder-2.xml\norder-3.xml"| Q
+    Q -->|"one copy, load-balanced"| R1
+    Q -->|"one copy, load-balanced"| R2
+
+    style S fill:#4CAF50,color:#fff,stroke:#388E3C
+    style Q fill:#1976D2,color:#fff,stroke:#0D47A1
+    style R1 fill:#F57C00,color:#fff,stroke:#E65100
+    style R2 fill:#F57C00,color:#fff,stroke:#E65100

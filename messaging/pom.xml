@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.tutorial.camel</groupId>
+  <artifactId>messaging</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <name>INSY Camel Tutorial :: Messaging (TIBCO EMS)</name>
+
+  <prerequisites>
+    <maven>3.5.0</maven>
+  </prerequisites>
+
+  <modules>
+    <module>jms-sender</module>
+    <module>jms-receiver</module>
+    <module>jms-request-reply-requester</module>
+    <module>jms-request-reply-responder</module>
+    <module>jms-topic-publisher</module>
+    <module>jms-topic-subscriber</module>
+  </modules>
+
+</project>

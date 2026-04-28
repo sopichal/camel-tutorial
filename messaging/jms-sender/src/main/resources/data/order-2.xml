@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<order xmlns="http://tutorial.camel.com/orders">
+  <orderId>ORD-002</orderId>
+  <customer>
+    <id>C002</id>
+    <name>TechStart Industries</name>
+    <email>procurement@techstart.io</email>
+  </customer>
+  <items>
+    <item>
+      <sku>GADGET-B</sku>
+      <description>Industrial Gadget Type B</description>
+      <quantity>5</quantity>
+      <unitPrice>149.50</unitPrice>
+    </item>
+    <item>
+      <sku>TOOL-C</sku>
+      <description>Precision Tool Set C</description>
+      <quantity>2</quantity>
+      <unitPrice>89.99</unitPrice>
+    </item>
+  </items>
+  <subtotal>927.48</subtotal>
+  <tax>92.75</tax>
+  <total>1020.23</total>
+  <currency>USD</currency>
+  <createdAt>2026-04-27T11:30:00Z</createdAt>
+</order>

@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  ems:
+    image: ems:8.5.1
+    container_name: ems
+    ports:
+      - "7222:7222"
+    volumes:
+      - ./tibemssrv:/shared
+    networks:
+      - camel-network
+
+# volumes:
+#   tibemssrv:
+#     driver: local
+
+networks:
+  camel-network:
+    driver: bridge

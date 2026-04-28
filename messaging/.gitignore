@@ -1,0 +1,7 @@
+lib/
+target/
+*.jar
+*.class
+.DS_Store
+docker/tibemssrv/
+*.tar.gz

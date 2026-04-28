@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<order xmlns="http://tutorial.camel.com/orders">
+  <orderId>ORD-003</orderId>
+  <customer>
+    <id>C003</id>
+    <name>Global Distribution Ltd</name>
+    <email>supply@globaldist.com</email>
+  </customer>
+  <items>
+    <item>
+      <sku>COMPONENT-D</sku>
+      <description>Electronic Component D Series</description>
+      <quantity>100</quantity>
+      <unitPrice>12.50</unitPrice>
+    </item>
+    <item>
+      <sku>SUPPLY-E</sku>
+      <description>Consumable Supply Pack E</description>
+      <quantity>50</quantity>
+      <unitPrice>5.99</unitPrice>
+    </item>
+    <item>
+      <sku>PACKAGE-F</sku>
+      <description>Packaging Material F</description>
+      <quantity>25</quantity>
+      <unitPrice>3.45</unitPrice>
+    </item>
+  </items>
+  <subtotal>1549.75</subtotal>
+  <tax>154.98</tax>
+  <total>1704.73</total>
+  <currency>USD</currency>
+  <createdAt>2026-04-27T13:15:00Z</createdAt>
+</order>

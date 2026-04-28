@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<order xmlns="http://tutorial.camel.com/orders">
+  <orderId>ORD-001</orderId>
+  <customer>
+    <id>C001</id>
+    <name>Acme Corporation</name>
+    <email>orders@acme.com</email>
+  </customer>
+  <items>
+    <item>
+      <sku>WIDGET-A</sku>
+      <description>Premium Widget Type A</description>
+      <quantity>10</quantity>
+      <unitPrice>29.99</unitPrice>
+    </item>
+  </items>
+  <subtotal>299.90</subtotal>
+  <tax>29.99</tax>
+  <total>329.89</total>
+  <currency>USD</currency>
+  <createdAt>2026-04-27T10:00:00Z</createdAt>
+</order>

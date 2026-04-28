@@ -1,0 +1,17 @@
+flowchart LR
+    P["🕐 Topic Publisher\n(timer: every 6 s)\njms-topic-publisher"]
+    T{{"CAMEL.EVENTS.TOPIC"}}
+    S1["📡 Subscriber #1\njms-topic-subscriber"]
+    S2["📡 Subscriber #2\njms-topic-subscriber"]
+    SN["📡 Subscriber #N\n(any number of instances)"]
+
+    P -->|"OrderCreated\nPaymentProcessed\nShipmentDispatched"| T
+    T -->|"copy"| S1
+    T -->|"copy"| S2
+    T -->|"copy"| SN
+
+    style P fill:#4CAF50,color:#fff,stroke:#388E3C
+    style T fill:#7B1FA2,color:#fff,stroke:#4A148C
+    style S1 fill:#F57C00,color:#fff,stroke:#E65100
+    style S2 fill:#F57C00,color:#fff,stroke:#E65100
+    style SN fill:#9E9E9E,color:#fff,stroke:#616161

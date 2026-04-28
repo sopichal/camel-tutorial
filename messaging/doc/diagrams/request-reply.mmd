@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant Req as Requester<br/>(jms-request-reply-requester)
+    participant RQ as CAMEL.REQUEST.QUEUE
+    participant Resp as Responder<br/>(jms-request-reply-responder)
+    participant RepQ as CAMEL.REPLY.QUEUE.{instanceId}
+
+    Note over Req: Generate UUID correlationId<br/>Set X-Reply-Queue: CAMEL.REPLY.QUEUE.{id}
+
+    Req->>RQ: send(request XML)<br/>JMSCorrelationID: uuid<br/>X-Reply-Queue: CAMEL.REPLY.QUEUE.{id}
+    Req->>Req: pendingRequests.put(correlationId)
+
+    RQ->>Resp: deliver request
+    Note over Resp: Extract correlationId<br/>Extract X-Reply-Queue header<br/>Process order → APPROVED
+
+    Resp->>RepQ: send(response XML)<br/>JMSCorrelationID: same uuid
+
+    RepQ->>Req: deliver reply
+    Note over Req: pendingRequests.remove(correlationId)<br/>→ non-null: VALID ✓<br/>→ null: REJECTED ✗
